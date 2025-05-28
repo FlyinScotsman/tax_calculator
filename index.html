@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Scotland Take-Home Pay Calculator 2025-26 with salary sacrifice benefits">
+    <meta name="theme-color" content="#3498db">
+    <title>Scotland Take-Home Pay Calculator 2025-26</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- iOS specific meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="TaxCalc">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiMzNDk4ZGIiLz4KPHN2ZyB4PSI0OCIgeT0iNDgiIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CjxwYXRoIGQ9Im0xNSA2LTYgNi02LTYiLz4KPHN0cm9rZT0icmVkIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+Cjwvc3ZnPgo=">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f1f3f4 0%, #e8eaf6 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .input-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #34495e;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .summary {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #2c3e50;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-left: 5px solid #27ae60;
+        }
+        .summary h2 {
+            margin-top: 0;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #27ae60;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0;
+            font-size: 16px;
+            padding: 6px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .summary-row:hover {
+            background: rgba(39, 174, 96, 0.1);
+            transform: translateX(5px);
+        }
+        .net-pay {
+            font-size: 20px;
+            font-weight: 600;
+            border-top: 2px solid rgba(39, 174, 96, 0.3);
+            padding-top: 12px;
+            margin-top: 12px;
+            background: rgba(39, 174, 96, 0.1);
+            margin-left: -10px;
+            margin-right: -10px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 8px;
+        }
+        .breakdown {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .collapsible-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 15px 0;
+            border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        .collapsible-header:hover {
+            background: rgba(52, 152, 219, 0.1);
+            margin-left: -15px;
+            margin-right: -15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            border-radius: 8px;
+        }
+        .collapsible-header h3 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 22px;
+            font-weight: 500;
+        }
+        .collapsible-arrow {
+            font-size: 20px;
+            font-weight: bold;
+            color: #3498db;
+            transition: transform 0.3s ease;
+        }
+        .collapsible-arrow.expanded {
+            transform: rotate(180deg);
+        }
+        .collapsible-content {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .collapsible-content.collapsed {
+            max-height: 0;
+            margin-bottom: 0;
+            opacity: 0;
+        }
+        .pension-summary {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #2c3e50;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-left: 5px solid #3498db;
+        }
+        .pension-summary h2 {
+            margin-top: 0;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #3498db;
+        }
+        .pension-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0;
+            font-size: 16px;
+            padding: 6px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .pension-row:hover {
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateX(5px);
+        }
+        .pension-total {
+            font-size: 20px;
+            font-weight: 600;
+            border-top: 2px solid rgba(52, 152, 219, 0.3);
+            padding-top: 12px;
+            margin-top: 12px;
+            background: rgba(52, 152, 219, 0.1);
+            margin-left: -10px;
+            margin-right: -10px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        th {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 14px;
+        }
+        tbody tr {
+            transition: all 0.3s ease;
+        }
+        tbody tr:hover {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            transform: translateY(-2px);
+        }
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        th.amount, td.amount {
+            text-align: right;
+            font-weight: 600;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 14px;
+            padding: 20px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 10px;
+        }
+        small {
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scotland Take-Home Pay Calculator 2025-26</h1>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <label for="salary">Annual Gross Salary (£)</label>
+                <input type="number" id="salary" value="140000" min="0" step="1000">
+            </div>
+            <div class="input-group">
+                <label for="pension">Your Pension Contribution (%)</label>
+                <input type="number" id="pension" value="5" min="0" max="100" step="0.5">
+            </div>
+            <div class="input-group">
+                <label for="pension-type">Your Contribution Type</label>
+                <select id="pension-type">
+                    <option value="relief">Relief at Source (reduces Income Tax only)</option>
+                    <option value="sacrifice">Salary Sacrifice (reduces Income Tax + NI)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="employer-pension">Employer Total Contribution (%)</label>
+                <input type="number" id="employer-pension" value="3" min="0" max="50" step="0.5">
+                <small>Includes base contribution + any matching</small>
+            </div>
+            
+            <div class="input-group" style="margin-top: 25px;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="checkbox" id="benefits-toggle" style="width: auto; margin-right: 10px;">
+                    <span style="font-size: 18px; font-weight: 600; color: #2c3e50;">Enable Salary Sacrifice Benefits</span>
+                </label>
+                <small style="color: #7f8c8d;">Only enable if your employer offers salary sacrifice schemes</small>
+            </div>
+            
+            <div id="benefits-section" style="display: none;">
+                <h3 style="margin: 20px 0 15px 0; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 8px;">Salary Sacrifice Benefits (Annual £)</h3>
+                <small style="color: #7f8c8d; margin-bottom: 15px; display: block;">These reduce both Income Tax and National Insurance</small>
+                
+                <div class="input-group">
+                    <label for="electric-car">Electric Vehicle Monthly Lease Cost</label>
+                    <input type="number" id="electric-car" value="0" min="0" step="50">
+                    <small>Monthly salary sacrifice amount for company car lease</small>
+                </div>
+                <div class="input-group">
+                    <label for="car-value">Electric Vehicle List Price (£)</label>
+                    <input type="number" id="car-value" value="0" min="0" step="1000">
+                    <small>P11D value for Benefit-in-Kind tax calculation (2% BIK rate for electric)</small>
+                </div>
+                <div class="input-group">
+                    <label for="cycle-scheme">Cycle to Work Scheme</label>
+                    <input type="number" id="cycle-scheme" value="0" min="0" step="100">
+                    <small>Up to £3,000 per bike purchase</small>
+                </div>
+                <div class="input-group">
+                    <label for="holiday-purchase">Additional Holiday Purchase</label>
+                    <input type="number" id="holiday-purchase" value="0" min="0" step="500">
+                    <small>Buy extra holiday days through salary sacrifice</small>
+                </div>
+                <div class="input-group">
+                    <label for="professional-subs">Professional Subscriptions</label>
+                    <input type="number" id="professional-subs" value="0" min="0" step="100">
+                    <small>Institute memberships, certifications, training</small>
+                </div>
+                <div class="input-group">
+                    <label for="other-benefits">Other Salary Sacrifice Benefits</label>
+                    <input type="number" id="other-benefits" value="0" min="0" step="100">
+                    <small>Health plans, technology allowance, etc.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="results">
+            <div class="summary">
+                <h2>Take-Home Pay Summary</h2>
+                <div class="summary-row">
+                    <span>Gross Annual Salary:</span>
+                    <span id="gross-display">£140,000.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Less: Pension Contribution:</span>
+                    <span id="pension-display">£7,000.00</span>
+                </div>
+                <div class="summary-row" id="benefits-row" style="display: none;">
+                    <span>Less: Salary Sacrifice Benefits:</span>
+                    <span id="benefits-display">£0.00</span>
+                </div>
+                <div class="summary-row" id="bik-row" style="display: none;">
+                    <span>Plus: Benefit-in-Kind (BIK) Tax:</span>
+                    <span id="bik-display">£0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Personal Allowance:</span>
+                    <span id="allowance-display">£0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Taxable Income:</span>
+                    <span id="taxable-display">£133,000.00<span id="taxable-warning" style="color: #e74c3c; font-weight: bold;"> *</span></span>
+                </div>
+                <div class="summary-row">
+                    <span>Less: Income Tax:</span>
+                    <span id="tax-display">£44,077.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Less: National Insurance:</span>
+                    <span id="ni-display">£11,892.00</span>
+                </div>
+                <div class="summary-row net-pay">
+                    <span>Net Annual Take-Home:</span>
+                    <span id="net-annual">£77,031.00</span>
+                </div>
+                <div class="summary-row net-pay">
+                    <span>Net Monthly Take-Home:</span>
+                    <span id="net-monthly">£6,419.25</span>
+                </div>
+            </div>
+
+            <p id="allowance-warning" style="color: #e74c3c; margin: 15px 0; display: block; background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 8px; border-left: 4px solid #e74c3c;">* Your income after pension contributions is over £100,000, therefore your personal allowance has been reduced to £0 (normally £12,570).</p>
+
+            <div class="breakdown">
+                <div class="collapsible-header" onclick="toggleSection('tax-content')">
+                    <h3>Scottish Income Tax Breakdown</h3>
+                    <span class="collapsible-arrow" id="tax-arrow">▼</span>
+                </div>
+                <div class="collapsible-content" id="tax-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tax Band</th>
+                                <th>Rate</th>
+                                <th class="amount">Taxable Amount</th>
+                                <th class="amount">Tax Due</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tax-breakdown">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="breakdown">
+                <div class="collapsible-header" onclick="toggleSection('ni-content')">
+                    <h3>National Insurance Breakdown</h3>
+                    <span class="collapsible-arrow" id="ni-arrow">▼</span>
+                </div>
+                <div class="collapsible-content" id="ni-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Band</th>
+                                <th>Rate</th>
+                                <th class="amount">Amount</th>
+                                <th class="amount">NI Due</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ni-breakdown">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pension-summary">
+                <div class="collapsible-header" onclick="toggleSection('pension-content')" style="border-bottom: 2px solid rgba(52, 152, 219, 0.3);">
+                    <h2 style="margin: 0; font-size: 20px;">Pension Contributions Summary</h2>
+                    <span class="collapsible-arrow" id="pension-arrow">▼</span>
+                </div>
+                <div class="collapsible-content" id="pension-content">
+                    <div class="pension-row">
+                        <span>Your Annual Contribution:</span>
+                        <span id="your-annual">£7,000.00</span>
+                    </div>
+                    <div class="pension-row">
+                        <span>Your Monthly Contribution:</span>
+                        <span id="your-monthly">£583.33</span>
+                    </div>
+                    <div class="pension-row">
+                        <span>Employer Annual Contribution:</span>
+                        <span id="employer-annual">£4,200.00</span>
+                    </div>
+                    <div class="pension-row">
+                        <span>Employer Monthly Contribution:</span>
+                        <span id="employer-monthly">£350.00</span>
+                    </div>
+                    <div class="pension-row pension-total">
+                        <span>Total Monthly into Pension Pot:</span>
+                        <span id="total-monthly">£933.33</span>
+                    </div>
+                    <div class="pension-row pension-total">
+                        <span>Total Annual into Pension Pot:</span>
+                        <span id="total-annual">£11,200.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Scottish Income Tax rates for 2025-26 tax year. Personal Allowance: £12,570</p>
+            <p>This calculator is for guidance only and assumes employment income.</p>
+        </div>
+    </div>
+
+    <script>
+        // Scottish Income Tax bands for 2025-26
+        const taxBands = [
+            { name: 'Starter Rate', min: 0, max: 14876, rate: 0.19 },
+            { name: 'Basic Rate', min: 14877, max: 26561, rate: 0.20 },
+            { name: 'Intermediate Rate', min: 26562, max: 43662, rate: 0.21 },
+            { name: 'Higher Rate', min: 43663, max: 75000, rate: 0.42 },
+            { name: 'Advanced Rate', min: 75001, max: 125140, rate: 0.45 },
+            { name: 'Top Rate', min: 125141, max: Infinity, rate: 0.48 }
+        ];
+
+        const personalAllowance = 12570;
+        const niPrimaryThreshold = 12570;
+        const niUpperLimit = 50270;
+
+        function formatCurrency(amount) {
+            return '£' + (Math.round(amount * 100) / 100).toLocaleString('en-GB', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function calculatePersonalAllowance(grossSalary) {
+            if (grossSalary <= 100000) {
+                return personalAllowance;
+            }
+            const reduction = Math.floor((grossSalary - 100000) / 2);
+            return Math.max(0, personalAllowance - reduction);
+        }
+
+        function calculateIncomeTax(totalIncome, personalAllowance, bikTaxableAmount) {
+            const regularTaxableIncome = Math.max(0, totalIncome - personalAllowance);
+            const totalTaxableIncome = regularTaxableIncome + bikTaxableAmount;
+            let totalTax = 0;
+            const breakdown = [];
+            let currentIncome = totalIncome - personalAllowance + bikTaxableAmount;
+            
+            for (const band of taxBands) {
+                // Find the overlap between our income and this tax band
+                const bandStart = band.min;
+                const bandEnd = band.max === Infinity ? currentIncome : band.max;
+                
+                // What portion of this band applies to our taxable income?
+                const incomeStart = Math.max(bandStart, personalAllowance);
+                const incomeEnd = Math.min(bandEnd, totalIncome + bikTaxableAmount);
+                
+                const taxableInThisBand = Math.max(0, incomeEnd - incomeStart);
+                
+                if (taxableInThisBand > 0) {
+                    const taxInBand = taxableInThisBand * band.rate;
+                    totalTax += taxInBand;
+                    
+                    // Format band name with actual taxable ranges
+                    let bandName = band.name;
+                    if (band.max === Infinity) {
+                        bandName += ` (£${incomeStart.toLocaleString()}+)`;
+                    } else {
+                        bandName += ` (£${incomeStart.toLocaleString()}-£${bandEnd.toLocaleString()})`;
+                    }
+                    
+                    breakdown.push({
+                        name: bandName,
+                        rate: (band.rate * 100).toFixed(0) + '%',
+                        taxableAmount: taxableInThisBand,
+                        tax: taxInBand
+                    });
+                }
+            }
+
+            return { total: totalTax, breakdown };
+        }
+
+        function calculateNationalInsurance(grossSalary, totalSalarySacrifice, pensionType) {
+            let totalNI = 0;
+            const breakdown = [];
+            
+            // All salary sacrifice reduces NI calculation base
+            const niCalculationBase = grossSalary - totalSalarySacrifice;
+
+            // 12% on earnings between £12,571 and £50,270
+            if (niCalculationBase > niPrimaryThreshold) {
+                const band1Earnings = Math.min(niCalculationBase, niUpperLimit) - niPrimaryThreshold;
+                const band1NI = band1Earnings * 0.12;
+                totalNI += band1NI;
+                
+                breakdown.push({
+                    name: 'Primary (12%)',
+                    rate: '12%',
+                    amount: band1Earnings,
+                    ni: band1NI
+                });
+            }
+
+            // 2% on earnings above £50,270
+            if (niCalculationBase > niUpperLimit) {
+                const band2Earnings = niCalculationBase - niUpperLimit;
+                const band2NI = band2Earnings * 0.02;
+                totalNI += band2NI;
+                
+                breakdown.push({
+                    name: 'Additional (2%)',
+                    rate: '2%',
+                    amount: band2Earnings,
+                    ni: band2NI
+                });
+            }
+
+            return { total: totalNI, breakdown };
+        }
+
+        function toggleSection(contentId) {
+            const content = document.getElementById(contentId);
+            const arrow = document.getElementById(contentId.replace('-content', '-arrow'));
+            
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                arrow.classList.add('expanded');
+            } else {
+                content.classList.add('collapsed');
+                arrow.classList.remove('expanded');
+            }
+        }
+
+        function updateAllCalculations() {
+            // Check if benefits are enabled
+            const benefitsEnabled = document.getElementById('benefits-toggle').checked;
+            
+            // Get values
+            const salary = parseFloat(document.getElementById('salary').value) || 0;
+            const pensionPercent = parseFloat(document.getElementById('pension').value) || 0;
+            const employerPercent = parseFloat(document.getElementById('employer-pension').value) || 0;
+            const pensionType = document.getElementById('pension-type').value;
+            
+            // Get salary sacrifice benefits (only if enabled)
+            let electricCarMonthly = 0;
+            let carValue = 0;
+            let cycleScheme = 0;
+            let holidayPurchase = 0;
+            let professionalSubs = 0;
+            let otherBenefits = 0;
+            
+            if (benefitsEnabled) {
+                electricCarMonthly = parseFloat(document.getElementById('electric-car').value) || 0;
+                carValue = parseFloat(document.getElementById('car-value').value) || 0;
+                cycleScheme = parseFloat(document.getElementById('cycle-scheme').value) || 0;
+                holidayPurchase = parseFloat(document.getElementById('holiday-purchase').value) || 0;
+                professionalSubs = parseFloat(document.getElementById('professional-subs').value) || 0;
+                otherBenefits = parseFloat(document.getElementById('other-benefits').value) || 0;
+            }
+            
+            // Calculate electric car costs
+            const electricCarAnnual = electricCarMonthly * 12;
+            const bikTaxableAmount = carValue * 0.02; // 2% BIK rate for electric cars
+            const totalBenefits = electricCarAnnual + cycleScheme + holidayPurchase + professionalSubs + otherBenefits;
+            
+            // Show/hide benefits rows in summary
+            document.getElementById('benefits-row').style.display = benefitsEnabled ? 'flex' : 'none';
+            document.getElementById('bik-row').style.display = benefitsEnabled && bikTaxableAmount > 0 ? 'flex' : 'none';
+            
+            // Calculate pension amounts
+            const yourAnnual = salary * (pensionPercent / 100);
+            const yourMonthly = yourAnnual / 12;
+            const employerAnnual = salary * (employerPercent / 100);
+            const employerMonthly = employerAnnual / 12;
+            const totalPensionAnnual = yourAnnual + employerAnnual;
+            const totalPensionMonthly = totalPensionAnnual / 12;
+            
+            // Update pension display
+            document.getElementById('your-annual').textContent = formatCurrency(yourAnnual);
+            document.getElementById('your-monthly').textContent = formatCurrency(yourMonthly);
+            document.getElementById('employer-annual').textContent = formatCurrency(employerAnnual);
+            document.getElementById('employer-monthly').textContent = formatCurrency(employerMonthly);
+            document.getElementById('total-annual').textContent = formatCurrency(totalPensionAnnual);
+            document.getElementById('total-monthly').textContent = formatCurrency(totalPensionMonthly);
+            
+            // Calculate tax (salary sacrifice benefits reduce taxable income, but BIK is added back as taxable)
+            const totalSalarySacrifice = yourAnnual + totalBenefits;
+            const salaryAfterDeductions = salary - totalSalarySacrifice;
+            const personalAllowanceAmount = calculatePersonalAllowance(salaryAfterDeductions);
+            const regularTaxableIncome = Math.max(0, salaryAfterDeductions - personalAllowanceAmount);
+            const totalTaxableIncome = regularTaxableIncome + bikTaxableAmount;
+            
+            const incomeTax = calculateIncomeTax(salaryAfterDeductions, personalAllowanceAmount, bikTaxableAmount);
+            const nationalInsurance = calculateNationalInsurance(salary, totalSalarySacrifice, pensionType);
+            
+            const netAnnual = salary - totalSalarySacrifice - incomeTax.total - nationalInsurance.total;
+            const netMonthly = netAnnual / 12;
+
+            // Update take-home pay summary
+            document.getElementById('gross-display').textContent = formatCurrency(salary);
+            document.getElementById('pension-display').textContent = formatCurrency(yourAnnual);
+            document.getElementById('benefits-display').textContent = formatCurrency(totalBenefits);
+            document.getElementById('bik-display').textContent = formatCurrency(bikTaxableAmount);
+            document.getElementById('allowance-display').textContent = formatCurrency(personalAllowanceAmount);
+            document.getElementById('taxable-display').innerHTML = formatCurrency(totalTaxableIncome) + 
+                (salaryAfterDeductions > 100000 ? '<span style="color: #e74c3c; font-weight: bold;"> *</span>' : '');
+            document.getElementById('tax-display').textContent = formatCurrency(incomeTax.total);
+            document.getElementById('ni-display').textContent = formatCurrency(nationalInsurance.total);
+            document.getElementById('net-annual').textContent = formatCurrency(netAnnual);
+            document.getElementById('net-monthly').textContent = formatCurrency(netMonthly);
+            
+            // Update the warning message dynamically
+            const warningElement = document.getElementById('allowance-warning');
+            if (salaryAfterDeductions > 100000) {
+                warningElement.style.display = 'block';
+                if (personalAllowanceAmount === 0) {
+                    warningElement.innerHTML = `* Your income after pension and benefits is <strong>£${formatCurrency(salaryAfterDeductions).replace('£', '')}</strong>, therefore your personal allowance has been completely eliminated (normally <strong>£12,570</strong>).`;
+                } else {
+                    warningElement.innerHTML = `* Your income after pension and benefits is <strong>£${formatCurrency(salaryAfterDeductions).replace('£', '')}</strong>, therefore your personal allowance has been reduced to <strong>${formatCurrency(personalAllowanceAmount)}</strong> (normally <strong>£12,570</strong>).`;
+                }
+            } else {
+                warningElement.style.display = 'none';
+            }
+
+            // Update tax breakdown table
+            const taxBreakdownTable = document.getElementById('tax-breakdown');
+            taxBreakdownTable.innerHTML = '';
+            
+            // Add Personal Allowance row first (always show, even if £0)
+            const personalAllowanceRow = taxBreakdownTable.insertRow();
+            personalAllowanceRow.innerHTML = `
+                <td>Personal Allowance (£0-£${personalAllowanceAmount.toLocaleString()})</td>
+                <td>0%</td>
+                <td class="amount">${formatCurrency(personalAllowanceAmount)}</td>
+                <td class="amount">£0.00</td>
+            `;
+            
+            // Add tax band rows
+            incomeTax.breakdown.forEach(band => {
+                const row = taxBreakdownTable.insertRow();
+                row.innerHTML = `
+                    <td>${band.name}</td>
+                    <td>${band.rate}</td>
+                    <td class="amount">${formatCurrency(band.taxableAmount)}</td>
+                    <td class="amount">${formatCurrency(band.tax)}</td>
+                `;
+            });
+
+            // Update NI breakdown table
+            const niBreakdownTable = document.getElementById('ni-breakdown');
+            niBreakdownTable.innerHTML = '';
+            nationalInsurance.breakdown.forEach(band => {
+                const row = niBreakdownTable.insertRow();
+                row.innerHTML = `
+                    <td>${band.name}</td>
+                    <td>${band.rate}</td>
+                    <td class="amount">${formatCurrency(band.amount)}</td>
+                    <td class="amount">${formatCurrency(band.ni)}</td>
+                `;
+            });
+        }
+
+        // Set up event listeners
+        document.getElementById('salary').addEventListener('input', updateAllCalculations);
+        document.getElementById('pension').addEventListener('input', updateAllCalculations);
+        document.getElementById('employer-pension').addEventListener('input', updateAllCalculations);
+        document.getElementById('pension-type').addEventListener('change', updateAllCalculations);
+        document.getElementById('benefits-toggle').addEventListener('change', function() {
+            const benefitsSection = document.getElementById('benefits-section');
+            benefitsSection.style.display = this.checked ? 'block' : 'none';
+            updateAllCalculations();
+        });
+        document.getElementById('electric-car').addEventListener('input', updateAllCalculations);
+        document.getElementById('car-value').addEventListener('input', updateAllCalculations);
+        document.getElementById('cycle-scheme').addEventListener('input', updateAllCalculations);
+        document.getElementById('holiday-purchase').addEventListener('input', updateAllCalculations);
+        document.getElementById('professional-subs').addEventListener('input', updateAllCalculations);
+        document.getElementById('other-benefits').addEventListener('input', updateAllCalculations);
+
+        // Initial calculation
+        updateAllCalculations();
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed (this is normal in development): ', registrationError);
+                    });
+            });
+        } else {
+            console.log('Service Worker not supported or not on HTTPS - PWA features disabled');
+        }
+
+        // PWA Install prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallButton();
+        });
+
+        function showInstallButton() {
+            // Create install button if it doesn't exist
+            if (!document.getElementById('install-button')) {
+                const installButton = document.createElement('button');
+                installButton.id = 'install-button';
+                installButton.textContent = '📱 Install App';
+                installButton.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background: #3498db;
+                    color: white;
+                    border: none;
+                    padding: 12px 20px;
+                    border-radius: 25px;
+                    font-size: 14px;
+                    cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+                    z-index: 1000;
+                    font-weight: 600;
+                `;
+                
+                installButton.addEventListener('click', async () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        console.log(`User response to the install prompt: ${outcome}`);
+                        deferredPrompt = null;
+                        installButton.remove();
+                    }
+                });
+                
+                document.body.appendChild(installButton);
+            }
+        }
+    </script>
+</body>
+</html>
